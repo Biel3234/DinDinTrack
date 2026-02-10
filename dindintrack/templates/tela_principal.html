@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DinDinTrack</title>
+</head>
+<body>
+    <h1>Controle Financeiro</h1>
+
+    <div class="card" style="background-color: #d4edda;"><strong>Entradas:</strong></div>
+    <div class="card" style="background-color: #f8d7da;"><strong>Saídas:</strong></div>
+    <div class="card" style="background-color: #fff3cd;"><strong>Saldo:</strong></div>
+
+    <div>
+            <h2>Adicionar Transação</h2>
+            <form action="" method="post">
+                <label for="descricao">Descrição:</label>
+                <input type="text" id="descricao" name="descricao" required><br><br>
+
+                <label for="valor">Valor:</label>
+                <input type="number" id="valor" name="valor" step="0.01" required><br><br>
+
+                <label for="tipo">Tipo:</label>
+                <select id="tipo" name="tipo" required>
+                    <option value="entrada">Entrada</option>
+                    <option value="saida">Saída</option>
+                </select><br><br>
+
+                <button type="submit">Adicionar</button>
+            </form>
+    </div>
+    
+    <div>
+        <h2>Transações Recentes</h2>
+        <ul>
+            <!-- Aqui serão listadas as transações recentes -->
+    </div>
+
+    
+
+    <div>
+        <h2>Importar extrato bancário</h2>
+        <button><a href="/importar_extrato">Importar</a></button>
+    </div>
+    
+</body>
+</html>
