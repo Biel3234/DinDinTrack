@@ -14,7 +14,8 @@
 
     <div>
             <h2>Adicionar Transação</h2>
-            <form action="" method="post">
+            <form action="{% url 'render_create' %}" method="post">
+                {% csrf_token %}
                 <label for="descricao">Descrição:</label>
                 <input type="text" id="descricao" name="descricao" required><br><br>
 
@@ -30,11 +31,15 @@
                 <button type="submit">Adicionar</button>
             </form>
     </div>
-    
+
     <div>
         <h2>Transações Recentes</h2>
         <ul>
             <!-- Aqui serão listadas as transações recentes -->
+             {% for t in transacoes %}
+                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.tipo }}</li>
+            {% endfor %}
+        </ul>
     </div>
 
     
