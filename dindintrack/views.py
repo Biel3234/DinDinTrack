@@ -6,8 +6,23 @@ from django.contrib.auth.models import User
 
 class ControleFinanceiro(View):
     def get(self, request):
-        transacoes = Transacao.objects.all()
-        return render(request, 'tela_principal.html', {'transacoes': transacoes})
+        perfil = self.request.user
+        transacoes = perfil.transacoes.all()
+        saldo = 0
+        entradas = 0
+        saidas = 0
+
+        for t in perfil.transacoes.all():
+            if t.tipo == 'saida':
+                saldo -= t.valor
+                saidas += t.valor
+            elif t.tipo == 'entrada':
+                saldo += t.valor
+                entradas += t.valor
+
+
+        return render(request, 'tela_principal.html', 
+        {'transacoes': transacoes, 'saldo': saldo, 'saidas': saidas, 'entradas': entradas})
     
     def post(self, request):
         usuario = self.request.user

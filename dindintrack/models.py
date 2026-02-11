@@ -6,7 +6,7 @@ class Transacao(models.Model):
         ('entrada', 'Entrada'),
         ('saida', 'Saída'),
     )
-    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='tarefas', null=False)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='transacoes', null=False)
     descricao = models.CharField(max_length=255)
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     tipo = models.CharField(choices=TIPOS_TRANSACAO)
