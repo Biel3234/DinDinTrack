@@ -6,6 +6,8 @@
     <title>DinDinTrack</title>
 </head>
 <body>
+    <h4>Olá, {{ user.username }}!</h4>
+    <strong><a href="{% url 'deslogar' %}">Encerrar sessão</a></strong>
     <h1>Controle Financeiro</h1>
 
     <div class="card" style="background-color: #d4edda;"><strong>Entradas: {{ entradas }}</strong></div>

@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DinDinTrack - Login</title>
+    <title>DinDinTrack - Login Erro</title>
 </head>
 <body>
     <h1>Login</h1>
+    <p style="color: red;">Credenciais inválidas ou Usuario não encontrado. Por favor, tente novamente.</p>
     <form action="{% url 'login' %}" method="post">
         {% csrf_token %}
         <label for="username">Username:</label>
