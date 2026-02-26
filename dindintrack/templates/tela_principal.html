@@ -39,7 +39,7 @@
         <ul>
             <!-- Aqui serão listadas as transações recentes -->
              {% for t in transacoes %}
-                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.tipo }}</li> <a href="{% url 'deletar' t.id %}">Excluir</a>
+                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.tipo }}</li> <a href="{% url 'deletar' t.id %}">Excluir</a> <a href="{% url 'editar' t.id %}">Editar</a>
             {% endfor %}
         </ul>
     </div>

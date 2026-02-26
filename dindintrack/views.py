@@ -53,6 +53,18 @@ def deletar_transacao(request, pk):
         transacao.delete()
         return redirect('render_create')
     
+def editar_transacao(request, pk):
+    transacao = Transacao.objects.get(pk=pk)
+    if request.method == 'GET':
+        return render(request, 'tela_editar_transacao.html', {'transacao': transacao})
+    elif request.method == 'POST':
+        transacao.descricao = request.POST.get('descricao')
+        transacao.valor = request.POST.get('valor')
+        transacao.tipo = request.POST.get('tipo')
+        transacao.save()
+        return redirect('render_create')
+
+
 def fazer_login(request):
     if request.method == 'GET':
         return render(request, 'tela_login.html')

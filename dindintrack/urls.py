@@ -6,5 +6,6 @@ urlpatterns = [
     path('login/', views.fazer_login, name='login' ),
     path('logout/', views.encerrar_login, name='deslogar'),
     path('cadastro/', views.cadastrar_usuario, name='cadastro'),
-    path('deletar_transacao/<int:pk>', views.deletar_transacao, name='deletar')
+    path('deletar_transacao/<int:pk>', views.deletar_transacao, name='deletar'),
+    path('editar/<int:pk>', views.editar_transacao, name='editar')
 ]

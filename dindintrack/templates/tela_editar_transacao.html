@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DinDinTrack - Editar Transação</title>
+</head>
+<body>
+    <h1>Editar Transação</h1>
+    {% load l10n %}
+    <form action="{% url 'editar' transacao.id %}" method="post">
+        {% csrf_token %}
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" value="{{ transacao.descricao }}" required><br><br>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" value="{{ transacao.valor|unlocalize }}" step="0.01" required><br><br>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="entrada" {% if transacao.tipo == 'entrada' %}selected{% endif %}>Entrada</option>
+            <option value="saida" {% if transacao.tipo == 'saida' %}selected{% endif %}>Saída</option>
+        </select><br><br>
+        <button type="submit">Salvar</button>
+    </form>
+</body>
+</html>
