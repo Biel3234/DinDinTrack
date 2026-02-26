@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DinDinTrack - Confirmar Exclusão</title>
+</head>
+<body>
+    <h2>Confirmar Exclusão</h2>
+    <p>Tem certeza que deseja excluir este item?</p>
+    <form action="{% url 'deletar' transacao.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit">Confirmar</button>
+        <a href="{% url 'render_create' %}">Cancelar</a>
+    </form>
+</body>
+</html>

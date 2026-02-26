@@ -43,7 +43,14 @@ class ControleFinanceiro(LoginRequiredMixin, View):
             valor = valor,
             tipo = tipo,
         )
-
+        return redirect('render_create')
+    
+def deletar_transacao(request, pk):
+    transacao = Transacao.objects.get(pk=pk)
+    if request.method == 'GET':
+        return render(request, 'tela_confirmar_delete.html', {'transacao': transacao})
+    elif request.method == 'POST':
+        transacao.delete()
         return redirect('render_create')
     
 def fazer_login(request):
@@ -75,6 +82,9 @@ def cadastrar_usuario(request):
             username = form.cleaned_data['username']
             email = form.cleaned_data['email']
             password = form.cleaned_data['password']
-            User.objects.create_user(username=username, email=email, password=password)
-            return redirect('login')
+            if User.objects.filter(email= email).exists():
+                return render(request, 'tela_cadastro_erro.html', {'formulario':form})
+            else:
+                User.objects.create_user(username=username, email=email, password=password)
+                return redirect('login')
             
