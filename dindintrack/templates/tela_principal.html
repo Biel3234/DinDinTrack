@@ -29,7 +29,12 @@
                     <option value="entrada">Entrada</option>
                     <option value="saida">Saída</option>
                 </select><br><br>
-
+                <select name="categoria" id="categoria" required>
+                    <option value="">Selecione uma categoria</option>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
+                    {% endfor %}
+                </select><br><br>
                 <button type="submit">Adicionar</button>
             </form>
     </div>
@@ -39,7 +44,7 @@
         <ul>
             <!-- Aqui serão listadas as transações recentes -->
              {% for t in transacoes %}
-                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.tipo }}</li> <a href="{% url 'deletar' t.id %}">Excluir</a> <a href="{% url 'editar' t.id %}">Editar</a>
+                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.categoria.nome }} - {{ t.tipo }}</li> <a href="{% url 'deletar' t.id %}">Excluir</a> <a href="{% url 'editar' t.id %}">Editar</a>
             {% endfor %}
         </ul>
     </div>

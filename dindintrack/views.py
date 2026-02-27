@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
 
-from .models import Transacao
+from .models import Transacao, Categoria
 from .forms import FormularioCadastro
 
 
@@ -15,6 +15,7 @@ class ControleFinanceiro(LoginRequiredMixin, View):
     def get(self, request):
         perfil = self.request.user
         transacoes = perfil.transacoes.all()
+        categorias = Categoria.objects.all()
         saldo = 0
         entradas = 0
         saidas = 0
@@ -29,19 +30,22 @@ class ControleFinanceiro(LoginRequiredMixin, View):
 
 
         return render(request, 'tela_principal.html', 
-        {'transacoes': transacoes, 'saldo': saldo, 'saidas': saidas, 'entradas': entradas})
+        {'transacoes': transacoes, 'categorias': categorias, 'saldo': saldo, 'saidas': saidas, 'entradas': entradas})
     
     def post(self, request):
         usuario = self.request.user
         descricao = request.POST.get('descricao')
         valor = request.POST.get('valor')
         tipo = request.POST.get('tipo')
+        categoria_id = request.POST.get('categoria')
+        categoria = Categoria.objects.get(pk=categoria_id)
 
         Transacao.objects.create(
             usuario = usuario,
             descricao = descricao,
             valor = valor,
             tipo = tipo,
+            categoria = categoria,
         )
         return redirect('render_create')
     
@@ -61,6 +65,7 @@ def editar_transacao(request, pk):
         transacao.descricao = request.POST.get('descricao')
         transacao.valor = request.POST.get('valor')
         transacao.tipo = request.POST.get('tipo')
+        transacao.categoria = request.POST.get('categoria')
         transacao.save()
         return redirect('render_create')
 
