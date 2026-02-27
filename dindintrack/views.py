@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -49,6 +50,7 @@ class ControleFinanceiro(LoginRequiredMixin, View):
         )
         return redirect('render_create')
     
+@login_required
 def deletar_transacao(request, pk):
     transacao = Transacao.objects.get(pk=pk)
     if request.method == 'GET':
@@ -56,7 +58,8 @@ def deletar_transacao(request, pk):
     elif request.method == 'POST':
         transacao.delete()
         return redirect('render_create')
-    
+
+@login_required 
 def editar_transacao(request, pk):
     transacao = Transacao.objects.get(pk=pk)
     if request.method == 'GET':
@@ -85,6 +88,7 @@ def fazer_login(request):
         else:
             return HttpResponse(render(request, 'tela_login_erro.html'))
         
+@login_required      
 def encerrar_login(request):
     logout(request)
     return redirect('login')
