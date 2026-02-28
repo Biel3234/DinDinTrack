@@ -7,8 +7,8 @@ from django.shortcuts import render, redirect
 from django.views.generic import View
 from django.http import HttpResponse
 
-from .models import Transacao, Categoria
-from .forms import FormularioCadastro
+from .forms import FormularioCadastro, FormularioCadastroCartao
+from .models import Transacao, Categoria, Cartao
 
 
 class ControleFinanceiro(LoginRequiredMixin, View):
@@ -72,7 +72,26 @@ def editar_transacao(request, pk):
         transacao.save()
         return redirect('render_create')
 
-
+class Adcionar_cartao(LoginRequiredMixin, View):
+    def get(self, request):
+        form = FormularioCadastroCartao()
+        return render(request, 'tela_cadastro_cartao.html', {'formulario': form})
+    
+    def post(self, request):
+        form = FormularioCadastroCartao(request.POST)
+        if form.is_valid():
+            Cartao.objects.create(
+                usuario=request.user,
+                nome=form.cleaned_data['nome'],
+                descricao=form.cleaned_data['descricao'],
+                limite=form.cleaned_data['limite'],
+                vencimento_fatura=form.cleaned_data['vencimento_fatura'],
+                fechamento_fatura=form.cleaned_data['fechamento_fatura'],
+            )
+            return redirect('render_create')
+        else:
+            return render(request, 'tela_cadastro_cartao_erro.html')
+    
 def fazer_login(request):
     if request.method == 'GET':
         return render(request, 'tela_login.html')
