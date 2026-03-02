@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Confirmar Exclusão de Cartão{% endblock %}
+{% block content %}
+<h2>Confirmar Exclusão</h2>
+<p>Tem certeza que deseja excluir este cartão?</p>
+<p class="muted"><strong>{{ cartao.nome }}</strong> - {{ cartao.numero|truncatechars:10 }}</p>
+
+<form action="{% url 'deletar_cartao' cartao.id %}" method="post" class="form">
+    {% csrf_token %}
+    <div style="display:flex;gap:8px">
+        <button type="submit" class="primary">Confirmar</button>
+        <a href="{% url 'listar_cartoes' %}"><button type="button">Cancelar</button></a>
+    </div>
+</form>
+{% endblock %}

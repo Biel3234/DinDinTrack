@@ -103,6 +103,34 @@ class Adcionar_cartao(LoginRequiredMixin, View):
             return redirect('render_create')
         else:
             return render(request, 'tela_cadastro_cartao_erro.html')
+        
+@login_required
+def deletar_cartao(request, pk):
+    cartao = Cartao.objects.get(pk=pk)
+    if request.method == 'GET':
+        return render(request, 'tela_confirmar_delete_cartao.html', {'cartao': cartao})
+    elif request.method == 'POST':
+        cartao.delete()
+        return redirect('listar_cartoes')
+
+@login_required
+def editar_cartao(request, pk):
+    cartao = Cartao.objects.get(pk=pk)
+    if request.method == 'GET':
+        return render(request, 'tela_editar_cartao.html', {'cartao': cartao})
+    elif request.method == 'POST':
+        cartao.nome = request.POST.get('nome')
+        cartao.descricao = request.POST.get('descricao')
+        cartao.limite = request.POST.get('limite')
+        cartao.vencimento_fatura = request.POST.get('vencimento_fatura')
+        cartao.fechamento_fatura = request.POST.get('fechamento_fatura')
+        cartao.save()
+        return redirect('listar_cartoes')
+        
+class Ver_cartoes(LoginRequiredMixin, View):
+    def get(self, request):
+        cartoes = Cartao.objects.all()
+        return render(request, 'tela_lista_cartoes.html', {'cartoes': cartoes})
     
 def fazer_login(request):
     if request.method == 'GET':

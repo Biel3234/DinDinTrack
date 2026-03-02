@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}DinDinTrack - Meus Cartões{% endblock %}
+{% block content %}
+<section class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+        <h1>Meus Cartões</h1>
+        <a href="{% url 'criar_cartao' %}"><button class="primary">+ Novo Cartão</button></a>
+    </div>
+</section>
+
+{% if cartoes %}
+    <div class="cards-row" style="grid-template-columns:repeat(auto-fill,minmax(280px,1fr))">
+        {% for cartao in cartoes %}
+            <div class="card" style="border-left:4px solid var(--accent-2);padding:16px">
+                <h3 style="margin:0 0 8px 0;font-size:1rem">{{ cartao.nome }}</h3>
+                <p class="muted" style="margin:0 0 12px 0">{{ cartao.numero|truncatechars:10 }}</p>
+                
+                <div style="margin:12px 0;padding:12px;background:var(--accent-2);border-radius:8px">
+                    <div class="muted">Limite: <strong>R$ {{ cartao.limite }}</strong></div>
+                    <div class="muted">Fechamento: <strong>{{ cartao.fechamento_fatura }}/mês</strong></div>
+                    <div class="muted">Vencimento: <strong>{{ cartao.vencimento_fatura }}/mês</strong></div>
+                </div>
+
+                <div style="display:flex;gap:8px;margin-top:12px">
+                    <a href="{% url 'editar_cartao' cartao.id %}"><button style="font-size:0.85rem;padding:6px 10px">Editar</button></a>
+                    <a href="{% url 'deletar_cartao' cartao.id %}"><button style="font-size:0.85rem;padding:6px 10px;color:#b91c1c">Deletar</button></a>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="card" style="text-align:center;padding:32px">
+        <p class="muted">Nenhum cartão cadastrado ainda.</p>
+        <a href="{% url 'criar_cartao' %}"><button class="primary" style="margin-top:12px">Criar Cartão</button></a>
+    </div>
+{% endif %}
+
+{% endblock %}
