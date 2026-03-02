@@ -20,11 +20,14 @@ class ControleFinanceiro(LoginRequiredMixin, View):
         perfil = self.request.user
         transacoes = perfil.transacoes.all()
         categorias = Categoria.objects.all()
+        cartoes = Cartao.objects.all()
         saldo = 0
         entradas = 0
         saidas = 0
 
         for t in perfil.transacoes.all():
+            if t.metodo_pagamento:
+                continue
             if t.tipo == 'saida':
                 saldo -= t.valor
                 saidas += t.valor
@@ -34,7 +37,7 @@ class ControleFinanceiro(LoginRequiredMixin, View):
 
 
         return render(request, 'tela_principal.html', 
-        {'transacoes': transacoes, 'categorias': categorias, 'saldo': saldo, 'saidas': saidas, 'entradas': entradas})
+        {'transacoes': transacoes, 'categorias': categorias, 'saldo': saldo, 'saidas': saidas, 'entradas': entradas, 'cartoes': cartoes})
     
     def post(self, request):
         usuario = self.request.user
@@ -43,6 +46,11 @@ class ControleFinanceiro(LoginRequiredMixin, View):
         tipo = request.POST.get('tipo')
         categoria_id = request.POST.get('categoria')
         categoria = Categoria.objects.get(pk=categoria_id)
+        cartao_id = request.POST.get('cartao')
+        if cartao_id:
+            metodo_pagamento_cartao = Cartao.objects.get(pk=cartao_id)
+        else:
+            metodo_pagamento_cartao = None
 
         Transacao.objects.create(
             usuario = usuario,
@@ -50,6 +58,7 @@ class ControleFinanceiro(LoginRequiredMixin, View):
             valor = valor,
             tipo = tipo,
             categoria = categoria,
+            metodo_pagamento = metodo_pagamento_cartao
         )
         return redirect('render_create')
     

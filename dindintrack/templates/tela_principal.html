@@ -35,6 +35,17 @@
             {% endfor %}
         </select>
 
+        <label for="cartao">Escolha o metodo de pagamento:</label>
+        <select name="cartao" id="cartao">
+            <option value="">Selecione um cartão</option>
+            {% for cartao in cartoes %}
+                <option value="{{ cartao.id }}">{{ cartao.nome }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="data">Data:</label>
+        <input type="date" id="data" name="data" required>
+
         <div style="margin-top:12px">
             <button type="submit" class="primary">Adicionar</button>
         </div>

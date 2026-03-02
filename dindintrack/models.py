@@ -27,6 +27,7 @@ class Transacao(models.Model):
     valor = models.DecimalField(max_digits=10, decimal_places=2)
     tipo = models.CharField(choices=TIPOS_TRANSACAO)
     categoria = models.ForeignKey(Categoria, on_delete=models.DO_NOTHING, default='sem categoria')
+    metodo_pagamento = models.ForeignKey(Cartao, on_delete=models.SET_NULL, null=True, blank=True)
     data = models.DateField(auto_now_add=True)
 
     def __str__(self):
