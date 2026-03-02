@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DinDinTrack - Login</title>
-</head>
-<body>
-    <h1>Login</h1>
-    <form action="{% url 'login' %}" method="post">
-        {% csrf_token %}
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="name" required><br><br>
-        
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required><br><br>
+{% extends "base.html" %}
+{% block title %}DinDinTrack - Login{% endblock %}
+{% block content %}
+<h1>Login</h1>
+<form action="{% url 'login' %}" method="post" class="form">
+    {% csrf_token %}
+    <label for="username">Username:</label>
+    <input type="text" id="username" name="name" required>
 
-        <button type="submit">Login</button>
-</body>
-</html>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required>
+
+    <div style="margin-top:12px">
+        <button type="submit" class="primary">Login</button>
+    </div>
+</form>
+{% endblock %}

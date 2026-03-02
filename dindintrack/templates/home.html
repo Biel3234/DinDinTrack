@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}DinDinTrack - Home{% endblock %}
+{% block content %}
+{% if user.is_authenticated %}
+    <section class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+        <h1>Bem-vindo de volta, {{ user.first_name }}!</h1>
+        <p class="muted">Veja um resumo das suas finanças ou adicione novas transações.</p>
+        <div style="display:flex;gap:8px">
+            <a href=""><button class="primary">Dashboard</button></a>
+            <a href="{% url 'render_create' %}"><button>Adicionar Transação</button></a>
+        </div>
+    </section>
+    {% else %}
+<section class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
+    <h1>Bem-vindo ao DinDinTrack</h1>
+    <p class="muted">Organize suas finanças de forma simples e visual.</p>
+    <div style="display:flex;gap:8px">
+        <a href="{% url 'login' %}"><button class="primary">Entrar</button></a>
+        <a href="{% url 'cadastro' %}"><button>Cadastre-se</button></a>
+    </div>
+</section>
+{% endif %}
+
+<section class="card" style="margin-top:12px">
+    <h2>Funcionalidades</h2>
+    <ul>
+        <li>Adicionar e editar transações</li>
+        <li>Visualizar entradas, saídas e saldo</li>
+        <li>Importar extratos bancários</li>
+    </ul>
+</section>
+
+{% endblock %}

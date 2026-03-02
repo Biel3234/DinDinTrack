@@ -11,6 +11,9 @@ from .forms import FormularioCadastro, FormularioCadastroCartao
 from .models import Transacao, Categoria, Cartao
 
 
+def home(request):
+    return render(request, 'home.html')
+
 class ControleFinanceiro(LoginRequiredMixin, View):
     login_url = 'login'
     def get(self, request):

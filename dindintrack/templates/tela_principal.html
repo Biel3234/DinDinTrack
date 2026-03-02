@@ -1,60 +1,65 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DinDinTrack</title>
-</head>
-<body>
-    <h4>Olá, {{ user.username }}!</h4>
-    <strong><a href="{% url 'deslogar' %}">Encerrar sessão</a></strong>
-    <h1>Controle Financeiro</h1>
+{% extends "base.html" %}
+{% block title %}DinDinTrack - Painel{% endblock %}
+{% block content %}
+<h4>Olá, {{ user.username }}!</h4>
 
-    <div class="card" style="background-color: #d4edda;"><strong>Entradas: {{ entradas }}</strong></div>
-    <div class="card" style="background-color: #f8d7da;"><strong>Saídas: {{ saidas }}</strong></div>
-    <div class="card" style="background-color: #fff3cd;"><strong>Saldo: {{ saldo }}</strong></div>
+<h1>Controle Financeiro</h1>
 
-    <div>
-            <h2>Adicionar Transação</h2>
-            <form action="{% url 'render_create' %}" method="post">
-                {% csrf_token %}
-                <label for="descricao">Descrição:</label>
-                <input type="text" id="descricao" name="descricao" required><br><br>
+<div class="cards-row">
+    <div class="card" style="background:var(--accent-3)"><strong>Entradas: {{ entradas }}</strong></div>
+    <div class="card" style="background:var(--accent-1)"><strong>Saídas: {{ saidas }}</strong></div>
+    <div class="card" style="background:var(--accent-2)"><strong>Saldo: {{ saldo }}</strong></div>
+</div>
 
-                <label for="valor">Valor:</label>
-                <input type="number" id="valor" name="valor" step="0.01" required><br><br>
+<div class="card">
+    <h2>Adicionar Transação</h2>
+    <form action="{% url 'render_create' %}" method="post" class="form">
+        {% csrf_token %}
+        <label for="descricao">Descrição:</label>
+        <input type="text" id="descricao" name="descricao" required>
 
-                <label for="tipo">Tipo:</label>
-                <select id="tipo" name="tipo" required>
-                    <option value="entrada">Entrada</option>
-                    <option value="saida">Saída</option>
-                </select><br><br>
-                <select name="categoria" id="categoria" required>
-                    <option value="">Selecione uma categoria</option>
-                    {% for categoria in categorias %}
-                        <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
-                    {% endfor %}
-                </select><br><br>
-                <button type="submit">Adicionar</button>
-            </form>
-    </div>
+        <label for="valor">Valor:</label>
+        <input type="number" id="valor" name="valor" step="0.01" required>
 
-    <div>
-        <h2>Transações Recentes</h2>
-        <ul>
-            <!-- Aqui serão listadas as transações recentes -->
-             {% for t in transacoes %}
-                <li>{{ t.descricao }} - {{ t.valor }} - {{ t.categoria.nome }} - {{ t.tipo }}</li> <a href="{% url 'deletar' t.id %}">Excluir</a> <a href="{% url 'editar' t.id %}">Editar</a>
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" name="tipo" required>
+            <option value="entrada">Entrada</option>
+            <option value="saida">Saída</option>
+        </select>
+
+        <label for="categoria">Categoria:</label>
+        <select name="categoria" id="categoria" required>
+            <option value="">Selecione uma categoria</option>
+            {% for categoria in categorias %}
+                <option value="{{ categoria.id }}">{{ categoria.nome }}</option>
             {% endfor %}
-        </ul>
-    </div>
+        </select>
 
-    
+        <div style="margin-top:12px">
+            <button type="submit" class="primary">Adicionar</button>
+        </div>
+    </form>
+</div>
 
-    <div>
-        <h2>Importar extrato bancário</h2>
-        <button><a href="/importar_extrato">Importar</a></button>
-    </div>
-    
-</body>
-</html>
+<div class="card">
+    <h2>Transações Recentes</h2>
+    <ul class="list">
+         {% for t in transacoes %}
+            <li>
+                <div>{{ t.descricao }} — <span class="muted">{{ t.categoria.nome }}</span></div>
+                <div>
+                    <strong>{{ t.valor }}</strong>
+                    &nbsp; <a href="{% url 'editar' t.id %}">Editar</a>
+                    &nbsp; <a href="{% url 'deletar' t.id %}">Excluir</a>
+                </div>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Importar extrato bancário</h2>
+    <a href="/importar_extrato"><button class="primary">Importar</button></a>
+</div>
+
+{% endblock %}

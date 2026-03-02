@@ -11,7 +11,7 @@ class FormularioCadastro(forms.ModelForm):
         labels = {
                   'username': 'Nome de Usuario',
                   'email': 'E-mail',
-                  'password': 'Senha'
+                  'password': 'Senha',
                   }
         
         widgets = {

@@ -1,20 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DinDinTrack - Erro no Cadastro</title>
-</head>
-<body>
-    <p style="color: red;">Usuario com este email ja existe. Por favor, tente novamente.</p>
-    <form action="{% url 'cadastro' %}" method="post">
-        {% csrf_token %}
-        {% for field in formulario %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-            {{ field }}
-            <br><br>
-        {% endfor %}
-        <button type="submit">Cadastrar</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}DinDinTrack - Erro no Cadastro{% endblock %}
+{% block content %}
+<p class="muted" style="color:#b91c1c">Usuário com este email já existe. Por favor, tente novamente.</p>
+<form action="{% url 'cadastro' %}" method="post" class="form">
+    {% csrf_token %}
+    {% for field in formulario %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+    {% endfor %}
+    <div style="margin-top:12px"><button type="submit" class="primary">Cadastrar</button></div>
+</form>
+{% endblock %}

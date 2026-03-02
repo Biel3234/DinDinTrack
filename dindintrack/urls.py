@@ -8,5 +8,6 @@ urlpatterns = [
     path('cadastro/', views.cadastrar_usuario, name='cadastro'),
     path('deletar_transacao/<int:pk>', views.deletar_transacao, name='deletar'),
     path('editar/<int:pk>', views.editar_transacao, name='editar'),
-    path('cartao/', views.Adcionar_cartao.as_view(), name='criar_cartao')
+    path('cartao/', views.Adcionar_cartao.as_view(), name='criar_cartao'),
+    path('', views.home, name='home')
 ]

@@ -1,20 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DinDinTrack - Erro no Cadastro de Cartão</title>
-</head>
-<body>
-    <h1>Erro ao Cadastrar Cartão</h1>
-    <p>Ocorreu um erro ao tentar cadastrar o cartão. Por favor, tente novamente.</p>
-    <form action="{% url 'criar_cartao' %}" method="post">
-        {% csrf_token %}
-        {% for field in formulario %}
-            <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
-            {{ field }}
-            <br><br>
-        {% endfor %}
-        <button type="submit">Cadastrar Cartão</button>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}Erro no Cadastro de Cartão{% endblock %}
+{% block content %}
+<h1>Erro ao Cadastrar Cartão</h1>
+<p class="muted" style="color:#b91c1c">Ocorreu um erro ao tentar cadastrar o cartão. Por favor, tente novamente.</p>
+<form action="{% url 'criar_cartao' %}" method="post" class="form">
+    {% csrf_token %}
+    {% for field in formulario %}
+        <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+        {{ field }}
+    {% endfor %}
+    <div style="margin-top:12px"><button type="submit" class="primary">Cadastrar Cartão</button></div>
+</form>
+{% endblock %}
