@@ -129,7 +129,8 @@ def editar_cartao(request, pk):
         
 class Ver_cartoes(LoginRequiredMixin, View):
     def get(self, request):
-        cartoes = Cartao.objects.all()
+        perfil = self.request.user
+        cartoes = perfil.cartoes.all()
         return render(request, 'tela_lista_cartoes.html', {'cartoes': cartoes})
     
 def fazer_login(request):
@@ -143,7 +144,7 @@ def fazer_login(request):
 
         if user is not None:
             login(request, user)
-            return redirect('render_create')
+            return redirect('home')
         else:
             return HttpResponse(render(request, 'tela_login_erro.html'))
         

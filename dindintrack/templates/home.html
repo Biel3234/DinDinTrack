@@ -8,13 +8,16 @@
         <div style="display:flex;gap:8px">
             <a href=""><button class="primary">Dashboard</button></a>
             <a href="{% url 'render_create' %}"><button>Adicionar Transação</button></a>
+            {% if user.cartoes.all %}
+            <a href="{% url 'listar_cartoes' %}"><button>Ver Cartões</button></a>
+            {% endif %}
         </div>
     </section>
     {% else %}
 <section class="card" style="display:flex;flex-direction:column;gap:12px;align-items:flex-start">
     <h1>Bem-vindo ao DinDinTrack</h1>
     <p class="muted">Organize suas finanças de forma simples e visual.</p>
-    <div style="display:flex;gap:8px">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
         <a href="{% url 'login' %}"><button class="primary">Entrar</button></a>
         <a href="{% url 'cadastro' %}"><button>Cadastre-se</button></a>
     </div>
